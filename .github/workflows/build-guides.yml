@@ -2,9 +2,11 @@ name: Build guides
 
 on:
   pull_request:
+    branches:
+    - workflowartifactstest
   push:
     branches:
-    - main
+    - workflowartifactstest
 
 jobs:
   import:
@@ -36,15 +38,15 @@ jobs:
         cargo install mdbook-plantuml
         export PATH=$PATH:$HOME/.cargo/bin
         mdbook build -d ../../rendered/docs/
-    - name: Publish the rendered guide
-      if: ${{ github.ref == 'refs/heads/main' }}
-      working-directory: rendered
-      run: |
-        pwd
-        ls -la
-        git add .
-        git commit -m "Render website" || echo "No changes"
-        git push origin gh-pages
+    #- name: Publish the rendered guide
+    #  if: ${{ github.ref == 'refs/heads/main' }}
+    #  working-directory: rendered
+    #  run: |
+    #    pwd
+    #    ls -la
+    #    git add .
+    #    git commit -m "Render website" || echo "No changes"
+    #    git push origin gh-pages
     - name: upload build result
       if: ${{ github.ref != 'refs/heads/main' }}
       uses: actions/upload-artifact@v3
