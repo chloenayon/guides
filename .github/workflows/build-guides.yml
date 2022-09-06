@@ -2,9 +2,11 @@ name: Build guides
 
 on:
   pull_request:
+    branches:
+    - workflowartifactstest
   push:
     branches:
-    - main
+    - workflowartifactstest
 
 jobs:
   import:
@@ -45,9 +47,15 @@ jobs:
     #    git add .
     #    git commit -m "Render website" || echo "No changes"
     #    git push origin gh-pages
-    - name: provide link to build result
+    - name: upload build result
       uses: actions/upload-artifact@v3
       with:
         name: build result
-        path: ../../rendered/docs/
-  
+        path: ./rendered/docs/
+    - name: comment link to artifact
+      uses: thollander/actions-comment-pull-request@v1
+      with:
+        message: |
+          Link to build artifact: https://nightly.link/chloenayon/guides/actions/runs/${{ github.run_id }}/build%20result.zip
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
