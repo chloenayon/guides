@@ -36,12 +36,18 @@ jobs:
         cargo install mdbook-plantuml
         export PATH=$PATH:$HOME/.cargo/bin
         mdbook build -d ../../rendered/docs/
-    - name: Publish the rendered guide
-      if: ${{ github.ref == 'refs/heads/main' }}
-      working-directory: rendered
-      run: |
-        pwd
-        ls -la
-        git add .
-        git commit -m "Render website" || echo "No changes"
-        git push origin gh-pages
+    #- name: Publish the rendered guide
+    #  if: ${{ github.ref == 'refs/heads/main' }}
+    #  working-directory: rendered
+    #  run: |
+    #    pwd
+    #    ls -la
+    #    git add .
+    #    git commit -m "Render website" || echo "No changes"
+    #    git push origin gh-pages
+    - name: provide link to build result
+      uses: actions/upload-artifact@v3
+      with:
+        name: build result
+        path: ../../rendered/docs/
+  
