@@ -53,3 +53,10 @@ jobs:
       with:
         name: build result
         path: ./rendered/docs/
+    - name: comment link to artifact
+      if: ${{ github.ref != 'refs/heads/main' }}
+      uses: thollander/actions-comment-pull-request@v1
+      with:
+        message: |
+          Link to download the build results: https://nightly.link/chloenayon/guides/actions/runs/${{ github.run_id }}/build%20result.zip
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
